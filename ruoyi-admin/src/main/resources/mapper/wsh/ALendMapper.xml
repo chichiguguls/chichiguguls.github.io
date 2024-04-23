@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.wsh.mapper.ALendMapper">
+    
+    <resultMap type="ALend" id="ALendResult">
+        <result property="id"    column="id"    />
+        <result property="no"    column="no"    />
+        <result property="name"    column="name"    />
+        <result property="sort"    column="sort"    />
+        <result property="picture"    column="picture"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="lend"    column="lend"    />
+        <result property="remark"    column="remark"    />
+        <result property="userName"    column="user_name"    />
+        <result property="surname"    column="surname"    />
+        <result property="phone"    column="phone"    />
+        <result property="card"    column="card"    />
+        <result property="ssfh"    column="ssfh"    />
+        <result property="shhf"    column="shhf"    />
+        <result property="addtime"    column="addtime"    />
+    </resultMap>
+
+    <sql id="selectALendVo">
+        select id, no, name, sort, picture, quantity, lend, remark, user_name, surname, phone, card, ssfh, shhf, addtime from a_lend
+    </sql>
+
+    <select id="selectALendList" parameterType="ALend" resultMap="ALendResult">
+        <include refid="selectALendVo"/>
+        <where>  
+            <if test="no != null  and no != ''"> and no = #{no}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+            <if test="lend != null "> and lend = #{lend}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="surname != null  and surname != ''"> and surname like concat('%', #{surname}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="card != null  and card != ''"> and card = #{card}</if>
+            <if test="ssfh != null  and ssfh != ''"> and ssfh = #{ssfh}</if>
+            <if test="shhf != null  and shhf != ''"> and shhf = #{shhf}</if>
+            <if test="addtime != null "> and addtime = #{addtime}</if>
+        </where>
+    </select>
+    
+    <select id="selectALendById" parameterType="Long" resultMap="ALendResult">
+        <include refid="selectALendVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertALend" parameterType="ALend" useGeneratedKeys="true" keyProperty="id">
+        insert into a_lend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="no != null">no,</if>
+            <if test="name != null">name,</if>
+            <if test="sort != null and sort != ''">sort,</if>
+            <if test="picture != null">picture,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="lend != null">lend,</if>
+            <if test="remark != null">remark,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="surname != null">surname,</if>
+            <if test="phone != null">phone,</if>
+            <if test="card != null">card,</if>
+            <if test="ssfh != null">ssfh,</if>
+            <if test="shhf != null">shhf,</if>
+            <if test="addtime != null">addtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="no != null">#{no},</if>
+            <if test="name != null">#{name},</if>
+            <if test="sort != null and sort != ''">#{sort},</if>
+            <if test="picture != null">#{picture},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="lend != null">#{lend},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="surname != null">#{surname},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="card != null">#{card},</if>
+            <if test="ssfh != null">#{ssfh},</if>
+            <if test="shhf != null">#{shhf},</if>
+            <if test="addtime != null">#{addtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateALend" parameterType="ALend">
+        update a_lend
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="no != null">no = #{no},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sort != null and sort != ''">sort = #{sort},</if>
+            <if test="picture != null">picture = #{picture},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="lend != null">lend = #{lend},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="surname != null">surname = #{surname},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="card != null">card = #{card},</if>
+            <if test="ssfh != null">ssfh = #{ssfh},</if>
+            <if test="shhf != null">shhf = #{shhf},</if>
+            <if test="addtime != null">addtime = #{addtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteALendById" parameterType="Long">
+        delete from a_lend where id = #{id}
+    </delete>
+
+    <delete id="deleteALendByIds" parameterType="String">
+        delete from a_lend where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

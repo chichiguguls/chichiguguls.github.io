@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.jsf.mapper.AGuihuanMapper">
+    
+    <resultMap type="AGuihuan" id="AGuihuanResult">
+        <result property="id"    column="id"    />
+        <result property="no"    column="no"    />
+        <result property="name"    column="name"    />
+        <result property="sort"    column="sort"    />
+        <result property="picture"    column="picture"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="guihuan"    column="guihuan"    />
+        <result property="remark"    column="remark"    />
+        <result property="userName"    column="user_name"    />
+        <result property="surname"    column="surname"    />
+        <result property="phone"    column="phone"    />
+        <result property="card"    column="card"    />
+        <result property="ssfh"    column="ssfh"    />
+        <result property="shhf"    column="shhf"    />
+        <result property="addtime"    column="addtime"    />
+    </resultMap>
+
+    <sql id="selectAGuihuanVo">
+        select id, no, name, sort, picture, quantity, guihuan, remark, user_name, surname, phone, card, ssfh, shhf, addtime from a_guihuan
+    </sql>
+
+    <select id="selectAGuihuanList" parameterType="AGuihuan" resultMap="AGuihuanResult">
+        <include refid="selectAGuihuanVo"/>
+        <where>  
+            <if test="no != null  and no != ''"> and no = #{no}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="ssfh != null  and ssfh != ''"> and ssfh = #{ssfh}</if>
+        </where>
+    </select>
+    
+    <select id="selectAGuihuanById" parameterType="Long" resultMap="AGuihuanResult">
+        <include refid="selectAGuihuanVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAGuihuan" parameterType="AGuihuan" useGeneratedKeys="true" keyProperty="id">
+        insert into a_guihuan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="no != null">no,</if>
+            <if test="name != null">name,</if>
+            <if test="sort != null and sort != ''">sort,</if>
+            <if test="picture != null">picture,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="guihuan != null">guihuan,</if>
+            <if test="remark != null">remark,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="surname != null">surname,</if>
+            <if test="phone != null">phone,</if>
+            <if test="card != null">card,</if>
+            <if test="ssfh != null">ssfh,</if>
+            <if test="shhf != null">shhf,</if>
+            <if test="addtime != null">addtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="no != null">#{no},</if>
+            <if test="name != null">#{name},</if>
+            <if test="sort != null and sort != ''">#{sort},</if>
+            <if test="picture != null">#{picture},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="guihuan != null">#{guihuan},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="surname != null">#{surname},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="card != null">#{card},</if>
+            <if test="ssfh != null">#{ssfh},</if>
+            <if test="shhf != null">#{shhf},</if>
+            <if test="addtime != null">#{addtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAGuihuan" parameterType="AGuihuan">
+        update a_guihuan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="no != null">no = #{no},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sort != null and sort != ''">sort = #{sort},</if>
+            <if test="picture != null">picture = #{picture},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="guihuan != null">guihuan = #{guihuan},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="surname != null">surname = #{surname},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="card != null">card = #{card},</if>
+            <if test="ssfh != null">ssfh = #{ssfh},</if>
+            <if test="shhf != null">shhf = #{shhf},</if>
+            <if test="addtime != null">addtime = #{addtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAGuihuanById" parameterType="Long">
+        delete from a_guihuan where id = #{id}
+    </delete>
+
+    <delete id="deleteAGuihuanByIds" parameterType="String">
+        delete from a_guihuan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

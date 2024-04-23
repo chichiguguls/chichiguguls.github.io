@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.wxh.mapper.AWxsmMapper">
+    
+    <resultMap type="AWxsm" id="AWxsmResult">
+        <result property="id"    column="id"    />
+        <result property="no"    column="no"    />
+        <result property="name"    column="name"    />
+        <result property="sort"    column="sort"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="weixiushuliang"    column="weixiushuliang"    />
+        <result property="shuoming"    column="shuoming"    />
+        <result property="schedule"    column="schedule"    />
+        <result property="addtime"    column="addtime"    />
+    </resultMap>
+
+    <sql id="selectAWxsmVo">
+        select id, no, name, sort, quantity, weixiushuliang, shuoming, schedule, addtime from a_wxsm
+    </sql>
+
+    <select id="selectAWxsmList" parameterType="AWxsm" resultMap="AWxsmResult">
+        <include refid="selectAWxsmVo"/>
+        <where>  
+            <if test="no != null  and no != ''"> and no = #{no}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+        </where>
+    </select>
+    
+    <select id="selectAWxsmById" parameterType="Long" resultMap="AWxsmResult">
+        <include refid="selectAWxsmVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAWxsm" parameterType="AWxsm" useGeneratedKeys="true" keyProperty="id">
+        insert into a_wxsm
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="no != null and no != ''">no,</if>
+            <if test="name != null">name,</if>
+            <if test="sort != null">sort,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="weixiushuliang != null">weixiushuliang,</if>
+            <if test="shuoming != null">shuoming,</if>
+            <if test="schedule != null and schedule != ''">schedule,</if>
+            <if test="addtime != null">addtime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="no != null and no != ''">#{no},</if>
+            <if test="name != null">#{name},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="weixiushuliang != null">#{weixiushuliang},</if>
+            <if test="shuoming != null">#{shuoming},</if>
+            <if test="schedule != null and schedule != ''">#{schedule},</if>
+            <if test="addtime != null">#{addtime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAWxsm" parameterType="AWxsm">
+        update a_wxsm
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="no != null and no != ''">no = #{no},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="weixiushuliang != null">weixiushuliang = #{weixiushuliang},</if>
+            <if test="shuoming != null">shuoming = #{shuoming},</if>
+            <if test="schedule != null and schedule != ''">schedule = #{schedule},</if>
+            <if test="addtime != null">addtime = #{addtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAWxsmById" parameterType="Long">
+        delete from a_wxsm where id = #{id}
+    </delete>
+
+    <delete id="deleteAWxsmByIds" parameterType="String">
+        delete from a_wxsm where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
